@@ -20,13 +20,11 @@ def strategy(history, memory):
     window_end = num_rounds
 
     their_recent_moves = history[1, window_start:window_end]
-    their_recent_stats = dict(
-        zip(*numpy.unique(their_recent_moves, return_counts=True))
-    )
+    their_recent_stats = numpy.bincount(their_recent_moves, minlength=2)
     actual_window_size = len(their_recent_moves)
 
-    cooperation_rate = their_recent_stats.get(1, 0) / actual_window_size
-    defection_rate = their_recent_stats.get(0, 0) / actual_window_size
+    cooperation_rate = their_recent_stats[1] / actual_window_size
+    defection_rate = their_recent_stats[0] / actual_window_size
 
     choice = 1
     if (

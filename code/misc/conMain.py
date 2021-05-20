@@ -19,8 +19,8 @@ def strategy(history, memory):
         choice = 1  # if we cheated them, don't cheat them twice
     elif num_rounds >= 5:
         last_five = history[1, num_rounds - 5 : num_rounds]
-        counts = dict(zip(*numpy.unique(last_five, return_counts=True)))
-        if counts.get(1, 0) == 5:
+        counts = numpy.bincount(last_five, minlength=2)
+        if counts[1] == 5:
             choice = 0
 
     return choice, None
